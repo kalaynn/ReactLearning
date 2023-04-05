@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 
 function App() {
   return (
-    <div>Content</div>
+    <div>New Content</div>
   );
 }
 
