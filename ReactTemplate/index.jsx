@@ -3,7 +3,9 @@ import ReactDOM from 'react-dom/client';
 
 function App() {
   return (
-    <div>Content</div>
+    <>
+      <div className="text-xl">Content</div>
+    </>
   );
 }
 

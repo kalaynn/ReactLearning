@@ -2,5 +2,5 @@ Quick start:
 
 ```
 $ npm install
-$ npm star
+$ npm run dev
 ````
