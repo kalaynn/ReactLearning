@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import './tailwind.css'
 import reactLogo from './images/react-logo.png'
 
 function App() {

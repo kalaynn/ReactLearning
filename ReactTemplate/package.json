@@ -11,10 +11,8 @@
   "scripts": {
     "start": "vite",
     "dev": "vite & npm run css:watch",
-    "build": "vite build && npm run css:build:production",
-    "preview": "vite preview",
-    "css:build": "tailwindcss -i ./index.css -o ./tailwind.css",
-    "css:build:production": "tailwindcss -i ./index.css -o ./dist/tailwind.css --minify",
+    "build": "npm run css:build && vite build",
+    "css:build": "tailwindcss -i ./index.css -o ./tailwind.css --minify",
     "css:watch": "tailwindcss -i ./index.css -o ./tailwind.css --watch"
   }
 }
