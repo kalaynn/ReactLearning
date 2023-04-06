@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import reactLogo from './images/react-logo.png'
 
 function App() {
   return (
     <div>
-      <img src="/react-logo.png" width="40"/>
+      <img src={reactLogo} width="40"/>
       <h1 className="text-3xl font-bold mb-4">Fun facts about React</h1>
       <ul>
         <li>Was first released in 2013</li>
