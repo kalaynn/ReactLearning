@@ -6,7 +6,7 @@ export default function MainContent() {
     return (
         <div className="bg-dark text-white px-8 bg-no-repeat bg-right" style={{backgroundImage: `url(${reactLogoPartial})`}}>
             <h1 className="text-4xl font-bold tracking-tight mb-8 pt-16">Fun facts about React</h1>
-            <ul className="list-disc text-cyan text-2xl mx-8 pb-24">
+            <ul className="list-disc mx-8 pb-24">
                 <ListItem text="Was first released in 2013" />
                 <ListItem text="Was originally created by Jordan Walke" />
                 <ListItem text="Has well over 100k stars on Github" />
