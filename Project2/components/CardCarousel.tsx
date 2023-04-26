@@ -10,14 +10,7 @@ export default function CardCarousel() {
             <div className="flex flex-row overflow-auto">
                 {Cards().map((card, index) => (
                     <Card
-                        title={card.title}
-                        reviewStars={card.reviewStars}
-                        reviewCount={card.reviewCount}
-                        location={card.location}
-                        cost={card.cost}
-                        imageSrc={card.imageSrc}
-                        isSoldOut={card.isSoldOut}
-                        isOnline={card.isOnline}
+                        {...card}
                         key={index}
                     />
                 ))}
