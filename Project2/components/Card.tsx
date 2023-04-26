@@ -38,7 +38,7 @@ export function Card({title, reviewStars, reviewCount, location, cost, imageSrc,
                         {reviewStars}
                     </span>
                     <span className="text-gray-600 mr-1">
-                        ({reviewCount})
+                        ({reviewCount}) •
                     </span>
                     <span className="text-gray-600">
                         {location}

@@ -3,7 +3,7 @@ import heroImage from '../images/hero-image.png'
 
 export default function Hero() {
     return (
-        <div className="mb-6">
+        <div className="mb-10">
             <img src={heroImage} className="px-8 mb-8"/>
             <h1 className="font-semibold text-4xl mb-4">
                 Online Experiences
