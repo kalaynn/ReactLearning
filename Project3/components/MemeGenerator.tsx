@@ -39,12 +39,14 @@ export default function MemeGenerator() {
                         type="text"
                         placeholder="Top text"
                         onChange={handleTopTextChange}
+                        value={topText}
                         className="border border-gray-400 rounded w-full p-2 m-2"
                     />
                     <input
                         type="text"
                         placeholder="Bottom text"
                         onChange={handleBottomTextChange}
+                        value={bottomText}
                         className="border border-gray-400 rounded w-full p-2 m-2"
                     />
                 </div>
