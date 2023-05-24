@@ -2,33 +2,37 @@ import React from 'react';
 import { Meme } from './Meme';
 
 export default function MemeGenerator() {
-    const [memes, setMemes] = React.useState([]);
-    const [currentMeme, setCurrentMeme] = React.useState({});
-    const [topText, setTopText] = React.useState("");
-    const [bottomText, setBottomText] = React.useState("");
+    const [memePool, setMemePool] = React.useState([]);
+    const [meme, setMeme] = React.useState({id: "", name: "", url: "", topText: "", bottomText: ""});
 
     React.useEffect(() => {
         async function retrieveMemes() {
             const response = await fetch("https://api.imgflip.com/get_memes");
             const jsonData = await response.json();
-            setMemes(jsonData.data.memes);
+            setMemePool(jsonData.data.memes);
         };
 
-        if (memes === undefined || memes.length == 0) {
+        if (memePool === undefined || memePool.length == 0) {
             retrieveMemes();
         }
     });
 
-    function handleTopTextChange(event) {
-        setTopText(event.target.value);
-    }
-
-    function handleBottomTextChange(event) {
-        setBottomText(event.target.value);
+    function handleChange(event) {
+        setMeme(
+            prevValue => ({
+                ...prevValue,
+                [event.target.name]: event.target.value
+            })
+        );
     }
 
     function getNewMemeImage() {
-        setCurrentMeme(memes[Math.floor(Math.random()*100)]);
+        setMeme(
+            prevValue => ({
+                ...prevValue,
+                ...memePool[Math.floor(Math.random()*100)]
+            })
+        );
     }
 
     return (
@@ -38,15 +42,17 @@ export default function MemeGenerator() {
                     <input
                         type="text"
                         placeholder="Top text"
-                        onChange={handleTopTextChange}
-                        value={topText}
+                        onChange={handleChange}
+                        name="topText"
+                        value={meme.topText}
                         className="border border-gray-400 rounded w-full p-2 m-2"
                     />
                     <input
                         type="text"
                         placeholder="Bottom text"
-                        onChange={handleBottomTextChange}
-                        value={bottomText}
+                        onChange={handleChange}
+                        name="bottomText"
+                        value={meme.bottomText}
                         className="border border-gray-400 rounded w-full p-2 m-2"
                     />
                 </div>
@@ -58,9 +64,7 @@ export default function MemeGenerator() {
                 </button>
             </div>
             <Meme
-                {...currentMeme}
-                topText={topText}
-                bottomText={bottomText}
+                {...meme}
             />
         </div>
     );
