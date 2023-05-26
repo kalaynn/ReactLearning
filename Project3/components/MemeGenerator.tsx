@@ -12,10 +12,8 @@ export default function MemeGenerator() {
             setMemePool(jsonData.data.memes);
         };
 
-        if (memePool === undefined || memePool.length == 0) {
-            retrieveMemes();
-        }
-    });
+        retrieveMemes();
+    }, []);
 
     function handleChange(event) {
         setMeme(
