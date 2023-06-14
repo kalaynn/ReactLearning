@@ -14,10 +14,12 @@ export default function Sidebar(props) {
                         {note.body.split("\n")[0] ? note.body.split("\n")[0] : "[Empty line]"}
                     </div>
                     <div
-                        className=""
+                        className="hover:font-semibold rounded bg-slate-500 text-slate-100 h-6 w-6 flex justify-center"
                         onClick={() => props.deleteNote(note.id)}
                     >
-                        X
+                        <div className="rotate-45 text-center">
+                            +
+                        </div>
                     </div>
                 </div>
             </div>
@@ -28,7 +30,11 @@ export default function Sidebar(props) {
         <section className="overflow-y-auto h-screen max-w-xs">
             <div className="flex justify-around m-4">
                 <h3 className="text-2xl font-semibold">Notes</h3>
-                <button className="cursor-pointer bg-mauve text-slate-100 h-8 w-8 rounded" onClick={props.createNote}>+</button>
+                <button
+                    className="cursor-pointer bg-mauve text-slate-100 h-8 w-8 rounded text-xl hover:font-semibold"
+                    onClick={props.createNote}>
+                    +
+                </button>
             </div>
             {noteElements}
         </section>
