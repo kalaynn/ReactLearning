@@ -9,12 +9,12 @@ export default function Sidebar(props) {
                 }`}
                 onClick={() => props.setCurrentNoteId(note.id)}
             >
-                <div className="flex justify-between w-full p-6 overflow-hidden">
-                    <div className="text-sm whitespace-nowrap text-ellipsis overflow-hidden">
+                <div className="flex justify-between w-full p-6 overflow-hidden group border-t border-slate-300">
+                    <div className="text-sm whitespace-nowrap text-ellipsis overflow-hidden h-6">
                         {note.body.split("\n")[0] ? note.body.split("\n")[0] : "[Empty line]"}
                     </div>
                     <div
-                        className="hover:font-semibold rounded bg-slate-500 text-slate-100 h-6 w-6 flex justify-center"
+                        className="hover:font-semibold group-hover:flex hidden rounded bg-slate-500 text-slate-100 h-6 w-6 shrink-0 justify-center"
                         onClick={() => props.deleteNote(note.id)}
                     >
                         <div className="rotate-45 text-center">
