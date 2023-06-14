@@ -3,7 +3,7 @@ import reactLogo from '../images/react-logo.png'
 
 export default function Header({toggleDarkMode}) {
     return (
-        <div className="bg-white text-gray-807000 dark:bg-dark-highlight dark:text-white">
+        <div className="bg-white drop-shadow-md dark:bg-dark-highlight dark:drop-shadow-none">
             <div className="p-6 flex">
                 <img src={reactLogo} className="w-8 mr-1"/>
                 <div className="flex flex-col justify-center w-full">
@@ -12,7 +12,7 @@ export default function Header({toggleDarkMode}) {
                             ReactFacts
                         </div>
                         <div 
-                            className="flex items-center" 
+                            className="flex items-center text-sm font-semibold" 
                         >
                             <p className="text-gray-500">Light</p>
                             <div 
