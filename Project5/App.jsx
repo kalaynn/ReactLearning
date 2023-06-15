@@ -23,9 +23,15 @@ export default function App() {
 
             setNotes(notesArray);
 
+            let currentNote = (notesArray.find(note => {
+                return note.id === currentNoteId
+            }) || notesArray[0]);
+
             if (! currentNoteId) {
-                setCurrentNoteId(notesArray[0]?.id);
+                setCurrentNoteId(currentNote.id);
             }
+
+            setEditorText(currentNote.body);
         });
 
         return unsubscribe;
