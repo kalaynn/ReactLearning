@@ -21,6 +21,10 @@ export default function App() {
             });
 
             setNotes(notesArray);
+
+            if (! currentNoteId) {
+                setCurrentNoteId(notesArray[0]?.id);
+            }
         });
 
         return unsubscribe;
@@ -75,6 +79,7 @@ export default function App() {
                     deleteNote={deleteNote}
                 />
                 {
+                    currentNoteId && 
                     notes.length > 0 &&
                     <Editor 
                         currentNote={findNote(currentNoteId)} 
