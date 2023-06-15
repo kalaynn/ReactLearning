@@ -40,11 +40,9 @@ export default function App() {
     }, [currentNoteId])
 
     React.useEffect(() => {
-        // debounce by waiting 2000 ms and checking that changes have settled
-        console.log('Queueing request')
+        // debounce by waiting 500 ms and checking that changes have settled
         const timeoutId = setTimeout(() => {
             if (editorText !== findNote(currentNoteId).body) {
-                console.log('Executing request')
                 updateNote(editorText);
             }
         }, 500);
