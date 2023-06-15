@@ -2,7 +2,7 @@ import React from "react"
 import ReactMde from "react-mde"
 import Showdown from "showdown"
 
-export default function Editor({ currentNote, updateNote }) {
+export default function Editor({ editorText, setEditorText }) {
     const [selectedTab, setSelectedTab] = React.useState("write")
 
     const converter = new Showdown.Converter({
@@ -15,8 +15,8 @@ export default function Editor({ currentNote, updateNote }) {
     return (
         <section className="overflow-y-auto h-screen">
             <ReactMde
-                value={currentNote.body}
-                onChange={updateNote}
+                value={editorText}
+                onChange={setEditorText}
                 selectedTab={selectedTab}
                 onTabChange={setSelectedTab}
                 generateMarkdownPreview={(markdown) =>

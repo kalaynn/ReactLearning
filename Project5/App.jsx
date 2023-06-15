@@ -8,6 +8,7 @@ import { notesCollection } from "./firebase"
 export default function App() {
     const [notes, setNotes] = React.useState([]);
     const [currentNoteId, setCurrentNoteId] = React.useState("");
+    const [editorText, setEditorText] = React.useState("");
 
     React.useEffect(() => {
         const unsubscribe = onSnapshot(notesCollection, (snapshot) => {
@@ -28,36 +29,57 @@ export default function App() {
         });
 
         return unsubscribe;
-    },[])
+    }, [])
+
+    React.useEffect(() => {
+        if (! currentNoteId) {
+            return;
+        }
+
+        setEditorText(findNote(currentNoteId).body);
+    }, [currentNoteId])
+
+    React.useEffect(() => {
+        // debounce by waiting 2000 ms and checking that changes have settled
+        console.log('Queueing request')
+        const timeoutId = setTimeout(() => {
+            if (editorText !== findNote(currentNoteId).body) {
+                console.log('Executing request')
+                updateNote(editorText);
+            }
+        }, 500);
+
+        return () => clearTimeout(timeoutId);
+    }, [editorText])
     
     async function createNote() {
-        const newNote = await addDoc(notesCollection, {
+        const noteReference = await addDoc(notesCollection, {
             body: "# Type your markdown note's title here",
             createdAt: Date.now(),
             updatedAt: Date.now()
         })
 
-        setCurrentNoteId(newNote.id);
+        setCurrentNoteId(noteReference.id);
     }
     
-    async function updateNote(text) {
+    function updateNote(body) {
         const noteReference = doc(notesCollection, currentNoteId);
 
-        await updateDoc(noteReference, {
-            body: text,
+        updateDoc(noteReference, {
+            body: body,
             updatedAt: Date.now()
         });
     }
 
-    async function deleteNote(id) {
-        const noteReference = doc(notesCollection, id);
+    async function deleteNote(noteId) {
+        const noteReference = doc(notesCollection, noteId);
 
         await deleteDoc(noteReference);
     }
     
-    function findNote(id) {
+    function findNote(noteId) {
         return notes.find(note => {
-            return note.id === id
+            return note.id === noteId
         }) || notes[0];
     }
     
@@ -78,14 +100,10 @@ export default function App() {
                     createNote={createNote}
                     deleteNote={deleteNote}
                 />
-                {
-                    currentNoteId && 
-                    notes.length > 0 &&
-                    <Editor 
-                        currentNote={findNote(currentNoteId)} 
-                        updateNote={updateNote} 
-                    />
-                }
+                <Editor 
+                    editorText={editorText} 
+                    setEditorText={setEditorText} 
+                />
             </Split>
             :
             <div className="w-full h-full flex flex-col justify-center items-center bg-slate-100 text-slate-800">
