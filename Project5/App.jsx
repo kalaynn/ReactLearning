@@ -5,8 +5,8 @@ import Split from "react-split"
 import {nanoid} from "nanoid"
 
 export default function App() {
-    const [notes, setNotes] = React.useState(() => JSON.parse(window.localStorage.getItem('react_project_notes') || []));
-    const [currentNoteId, setCurrentNoteId] = React.useState(() => (notes[0] && notes[0].id) || "");
+    const [notes, setNotes] = React.useState(() => JSON.parse(window.localStorage.getItem('react_project_notes')) || []);
+    const [currentNoteId, setCurrentNoteId] = React.useState(() => notes[0]?.id || "");
 
     React.useEffect(() => {
         window.localStorage.setItem('react_project_notes', JSON.stringify(notes));
