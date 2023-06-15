@@ -2,46 +2,53 @@ import React from "react"
 import Sidebar from "./components/Sidebar"
 import Editor from "./components/Editor"
 import Split from "react-split"
-import {nanoid} from "nanoid"
+import { addDoc, deleteDoc, doc, onSnapshot, updateDoc } from "firebase/firestore"
+import { notesCollection } from "./firebase"
 
 export default function App() {
-    const [notes, setNotes] = React.useState(() => JSON.parse(window.localStorage.getItem('react_project_notes')) || []);
-    const [currentNoteId, setCurrentNoteId] = React.useState(() => notes[0]?.id || "");
+    const [notes, setNotes] = React.useState([]);
+    const [currentNoteId, setCurrentNoteId] = React.useState("");
 
     React.useEffect(() => {
-        window.localStorage.setItem('react_project_notes', JSON.stringify(notes));
-    },[notes])
+        const unsubscribe = onSnapshot(notesCollection, (snapshot) => {
+            let notesArray = snapshot.docs.map(doc => ({
+                ...doc.data(),
+                id: doc.id
+            }))
+
+            notesArray = notesArray.sort((a, b) => {
+                return a.updatedAt >= b.updatedAt ? -1 : 1;
+            });
+
+            setNotes(notesArray);
+        });
+
+        return unsubscribe;
+    },[])
     
-    function createNote() {
-        const newNote = {
-            id: nanoid(),
+    async function createNote() {
+        const newNote = await addDoc(notesCollection, {
             body: "# Type your markdown note's title here",
             createdAt: Date.now(),
             updatedAt: Date.now()
-        };
+        })
 
-        setNotes(prevNotes => [newNote, ...prevNotes]);
         setCurrentNoteId(newNote.id);
     }
     
-    function updateNote(text) {
-        let updatedNotes = notes.map(oldNote => {
-            return oldNote.id === currentNoteId
-                ? { ...oldNote, body: text, updatedAt: Date.now() }
-                : oldNote
-        })
+    async function updateNote(text) {
+        const noteReference = doc(notesCollection, currentNoteId);
 
-        updatedNotes = updatedNotes.sort((a, b) => {
-            return a.updatedAt >= b.updatedAt ? -1 : 1;
+        await updateDoc(noteReference, {
+            body: text,
+            updatedAt: Date.now()
         });
-
-        setNotes(updatedNotes);
     }
 
-    function deleteNote(id) {
-        setNotes(oldNotes => {
-            return oldNotes.filter(note => note.id !== id);
-        });
+    async function deleteNote(id) {
+        const noteReference = doc(notesCollection, id);
+
+        await deleteDoc(noteReference);
     }
     
     function findNote(id) {
@@ -68,7 +75,6 @@ export default function App() {
                     deleteNote={deleteNote}
                 />
                 {
-                    currentNoteId && 
                     notes.length > 0 &&
                     <Editor 
                         currentNote={findNote(currentNoteId)} 
