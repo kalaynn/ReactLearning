@@ -77,16 +77,18 @@ export default function App() {
             <p className="text-center mb-4">
                 Roll until all dice are the same. Click each die to freeze it at its current value between rolls.
             </p>
-            <div className="flex justify-center mb-8">
-                {
-                    dice.map((die) => (
-                        <Die
-                            {...die}
-                            toggleHeld={toggleHeld}
-                            key={die.id}
-                        />
-                    ))
-                }
+            <div className="flex justify-center">
+                <div className="grid grid-cols-5 mb-8">
+                    {
+                        dice.map((die) => (
+                            <Die
+                                {...die}
+                                toggleHeld={toggleHeld}
+                                key={die.id}
+                            />
+                        ))
+                    }
+                </div>
             </div>
             <div className="flex justify-center">
                 <button
