@@ -95,7 +95,7 @@ export default function App() {
                     className="bg-indigo-600 text-white text-xl rounded-lg py-2 px-4"
                     onClick={isWon ? intializeGame : rollDice}
                 >
-                    {isWon ? "Reset Game" : "Roll"}
+                    {isWon ? "New Game" : "Roll"}
                 </button>
             </div>
         </div>
